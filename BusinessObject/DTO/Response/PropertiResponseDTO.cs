@@ -16,6 +16,7 @@ namespace BusinessObject.DTO.Response
 
         public bool Status { get; set; }
         public int RealEstateID { get; set; }
-        
+        public string RealEstateName { get; set; }
+
     }
 }

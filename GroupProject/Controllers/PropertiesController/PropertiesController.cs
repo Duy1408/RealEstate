@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using Service.Interface;
 using SQLitePCL;
+using AutoMapper;
+using BusinessObject.DTO.Response;
+using GroupProject.Mapper;
 
 namespace GroupProject.Controllers.PropertiesController
 {
@@ -16,10 +19,12 @@ namespace GroupProject.Controllers.PropertiesController
     public class PropertiesController : ControllerBase
     {
         private  IPropertieService _service;
+        private readonly IMapper _mapper;
 
-        public PropertiesController(IPropertieService service)
+        public PropertiesController(IPropertieService service, IMapper mapper)
         {
           _service = service;
+            _mapper = mapper;
         }
 
         // GET: api/Properties
@@ -30,7 +35,18 @@ namespace GroupProject.Controllers.PropertiesController
           {
               return NotFound();
           }
-            return _service.GetAllPropertie().ToList();
+
+            var config = new MapperConfiguration(
+                cfg => cfg.AddProfile(new PropertieProfile())
+            );
+            // create mapper
+            var mapper = config.CreateMapper();
+
+
+
+            var data = _service.GetAllPropertie().ToList().Select(properties => mapper.Map<Propertie, PropertiResponseDTO>(properties));
+
+            return Ok(data);
         }
 
         // GET: api/Properties/5

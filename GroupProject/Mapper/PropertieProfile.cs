@@ -32,6 +32,8 @@ namespace GroupProject.Mapper
                     dest => dest.RealEstateID,
                     opt => opt.MapFrom(src => src.RealEstateID)
                 );
+                
+
 
             CreateMap<PropertieUpdateDTO, Propertie>()
 
@@ -51,7 +53,7 @@ namespace GroupProject.Mapper
                     opt => opt.MapFrom(src => src.Status)
                 );
 
-            CreateMap<PropertiResponseDTO, Propertie>()
+            CreateMap< Propertie, PropertiResponseDTO>()
 
                .ForMember(
                    dest => dest.Name,
@@ -71,6 +73,10 @@ namespace GroupProject.Mapper
                .ForMember(
                    dest => dest.RealEstateID,
                    opt => opt.MapFrom(src => src.RealEstateID)
+               )
+               .ForMember(
+                   dest => dest.RealEstateName,
+                   opt => opt.MapFrom(src => src.RealEstate.RealEstateName)
                );
              
 
