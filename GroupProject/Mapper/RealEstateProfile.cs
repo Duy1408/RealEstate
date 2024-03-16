@@ -61,6 +61,10 @@ namespace GroupProject.Mapper
                opt => opt.MapFrom(src => src.Description)
            )
            .ForMember(
+               dest => dest.UserName,
+               opt => opt.MapFrom(src => src.User.UserName)
+           )
+           .ForMember(
                dest => dest.Status,
                opt => opt.MapFrom(src => src.Status)
            )
