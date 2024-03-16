@@ -1,0 +1,72 @@
+﻿@page
+@model RealEstateClient.Pages.AdminPage.RealEstatepage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RealEstate[0].RealEstateName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RealEstate[0].RealEstateAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RealEstate[0].Estimation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RealEstate[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RealEstate[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RealEstate[0].Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RealEstate[0].User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.RealEstate) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealEstateName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealEstateAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estimation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Image)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.RealEstateID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.RealEstateID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.RealEstateID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

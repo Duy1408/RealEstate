@@ -1,0 +1,67 @@
+﻿@page
+@model RealEstateClient.Pages.AdminPage.AuctionPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Auction</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Auction.DateStart)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Auction.DateStart)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Auction.DateEnd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Auction.DateEnd)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Auction.AuctionType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Auction.AuctionType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Auction.DepositeAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Auction.DepositeAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Auction.FeeAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Auction.FeeAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Auction.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Auction.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Auction.Bid)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Auction.Bid.BidID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Auction.RealEstate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Auction.RealEstate.Description)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Auction?.AuctionID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

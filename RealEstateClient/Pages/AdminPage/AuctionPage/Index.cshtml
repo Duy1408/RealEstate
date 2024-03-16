@@ -1,0 +1,78 @@
+﻿@page
+@model RealEstateClient.Pages.AdminPage.AuctionPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Auction[0].DateStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Auction[0].DateEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Auction[0].AuctionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Auction[0].DepositeAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Auction[0].FeeAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Auction[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Auction[0].Bid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Auction[0].RealEstate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Auction) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuctionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepositeAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeeAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bid.BidID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealEstate.Description)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.AuctionID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.AuctionID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.AuctionID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

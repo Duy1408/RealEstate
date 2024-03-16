@@ -1,0 +1,70 @@
+﻿@page
+@model RealEstateClient.Pages.AdminPage.AuctionPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Auction</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Auction.AuctionID" />
+            <div class="form-group">
+                <label asp-for="Auction.DateStart" class="control-label"></label>
+                <input asp-for="Auction.DateStart" class="form-control" />
+                <span asp-validation-for="Auction.DateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Auction.DateEnd" class="control-label"></label>
+                <input asp-for="Auction.DateEnd" class="form-control" />
+                <span asp-validation-for="Auction.DateEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Auction.AuctionType" /> @Html.DisplayNameFor(model => model.Auction.AuctionType)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Auction.DepositeAmount" class="control-label"></label>
+                <input asp-for="Auction.DepositeAmount" class="form-control" />
+                <span asp-validation-for="Auction.DepositeAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Auction.FeeAmount" class="control-label"></label>
+                <input asp-for="Auction.FeeAmount" class="form-control" />
+                <span asp-validation-for="Auction.FeeAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Auction.Status" /> @Html.DisplayNameFor(model => model.Auction.Status)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Auction.BidID" class="control-label"></label>
+                <input asp-for="Auction.BidID" class="form-control" />
+                <span asp-validation-for="Auction.BidID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Auction.RealEstateID" class="control-label"></label>
+                <input asp-for="Auction.RealEstateID" class="form-control" />
+                <span asp-validation-for="Auction.RealEstateID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
