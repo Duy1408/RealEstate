@@ -1,0 +1,67 @@
+﻿@page
+@model RealEstateClient.Pages.AdminPage.CommentPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Comment Page</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+    <a href="./RealEstatepage">RealEstatepage</a> | <a href="./AuctionPage">AuctionPage</a> | <a href="./BidPage">BidPage</a>| <a href="./UserPage">UserPage</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment[0].CommentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment[0].Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment[0].Rate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment[0].RealEstate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment[0].User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Comment) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealEstate.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.CommentID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.CommentID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.CommentID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

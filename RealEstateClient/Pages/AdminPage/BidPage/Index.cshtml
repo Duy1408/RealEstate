@@ -1,0 +1,37 @@
+﻿@page
+@model RealEstateClient.Pages.AdminPage.BidPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+    <a href="./RealEstatepage">RealEstatepage</a> | <a href="./AuctionPage">AuctionPage</a> | <a href="./CommentPage">CommentPage</a>| <a href="./UserPage">UserPage</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Bid[0].BidAmount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Bid) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidAmount)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.BidID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.BidID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.BidID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
