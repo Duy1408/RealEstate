@@ -67,6 +67,8 @@ builder.Services.AddScoped<IBidRepo, BidRepo>();
 builder.Services.AddScoped<IBidService, BidService>();
 builder.Services.AddScoped<ICommentRepo, CommentRepo>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IPropertieRepo, PropertieRepo>();
+builder.Services.AddScoped<IPropertieService, PropertiesService>();
 
 
 
