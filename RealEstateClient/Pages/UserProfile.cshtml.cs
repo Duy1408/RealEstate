@@ -6,21 +6,20 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
 
-namespace RealEstateClient.Pages.UserPage
+namespace RealEstateClient.Pages
 {
-    public class ProfilePageModel : PageModel
+    public class UserProfileModel : PageModel
     {
         private readonly HttpClient client;
         private string ApiUrl = "";
 
-        public ProfilePageModel()
+        public UserProfileModel()
         {
             client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
             ApiUrl = "https://localhost:7088/api/Users";
         }
-
         [BindProperty]
         public User User { get; set; } = default!;
 
@@ -56,7 +55,6 @@ namespace RealEstateClient.Pages.UserPage
             var _realEstate = JsonSerializer.Deserialize<RealEstate>(strData, options)!;
 
             RealEstate = _realEstate;
-
             User = _user;
             return Page();
         }
