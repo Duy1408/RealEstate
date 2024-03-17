@@ -47,8 +47,9 @@ namespace RealEstateClient.Pages.AdminPage.BidPage
                 HttpResponseMessage response = await client.PostAsync(ApiUrl, contentData);
                 if (response.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Add New Auctions successfully";
-                    return RedirectToPage("./Index");
+                    ViewData["Message"] = "Add New Bid successfully";
+                    ViewData["Success"] = "Please wait for approve";
+                    return Page();
                 }
 
             }

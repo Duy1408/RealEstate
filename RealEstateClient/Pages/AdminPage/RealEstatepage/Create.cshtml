@@ -61,6 +61,17 @@
     </div>
 </div>
 
+<div class="form-group text-danger">
+    @if (string.IsNullOrEmpty(token))
+    {
+        @ViewData["Message"]
+    }
+    else
+    {
+        @ViewData["Success"]
+    }
+</div>
+
 <div>
     <a asp-page="Index">Back to List</a>
 </div>
