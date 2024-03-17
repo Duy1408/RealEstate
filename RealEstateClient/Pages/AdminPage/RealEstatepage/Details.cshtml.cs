@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using BusinessObject.DTO.Response;
 
 namespace RealEstateClient.Pages.AdminPage.RealEstatepage
 {
@@ -24,7 +25,7 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
             ApiUrl = "https://localhost:7088/api/RealEstates";
 
         }
-        public RealEstate RealEstate { get; set; } = default!;
+        public RealEstateResponseDTO RealEstate { get; set; } = default!;
 
         public string Admin { get; private set; } = default!;
 
@@ -37,7 +38,7 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
             {
                 PropertyNameCaseInsensitive = true
             };
-            var _realEstate = JsonSerializer.Deserialize<RealEstate>(strData, options)!;
+            var _realEstate = JsonSerializer.Deserialize<RealEstateResponseDTO>(strData, options)!;
 
             var realEstate = _realEstate;
 

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using BusinessObject.DTO.Response;
 
 namespace RealEstateClient.Pages.AdminPage.RealEstatepage
 {
@@ -23,8 +24,8 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
             client.DefaultRequestHeaders.Accept.Add(contentType);
             ApiUrl = "https://localhost:7088/api/RealEstates";
 
-        } 
-        public IList<RealEstate> RealEstate { get;set; } = default!;
+        }
+        public IList<RealEstateResponseDTO> RealEstate { get; set; } = default!;
 
         public string Admin { get; private set; } = default!;
         public async Task<IActionResult> OnGetAsync()
@@ -52,7 +53,7 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
             {
                 PropertyNameCaseInsensitive = true
             };
-            List<RealEstate> listRealEstate = JsonSerializer.Deserialize<List<RealEstate>>(strData, options)!;
+            List<RealEstateResponseDTO> listRealEstate = JsonSerializer.Deserialize<List<RealEstateResponseDTO>>(strData, options)!;
 
             RealEstate = listRealEstate;
 

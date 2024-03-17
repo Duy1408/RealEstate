@@ -23,6 +23,8 @@ namespace GroupProject.Mapper
 
 
             CreateMap<RealEstateUpdateDTO, RealEstate>().ReverseMap();
+            CreateMap<RealEstateResponseDTO, RealEstate>().ReverseMap().ForMember(dest => dest.UserName,
+                                       opt => opt.MapFrom(src => src.User!.UserName));
 
             CreateMap<AuctionUpdateDTO, Auction>().ReverseMap();
             CreateMap<AuctionResponseDTO, Auction>().ReverseMap().ForMember(dest => dest.BidAmount,

@@ -28,7 +28,7 @@ namespace DAO
         {
             var _context = new TheRealEstateDBContext();
             return _context.RealEstates
-                .Include(c => c.User)           
+                .Include(c => c.User)
                 .ToList();
         }
 
@@ -68,7 +68,7 @@ namespace DAO
         public RealEstate GetRealEstateByID(int id)
         {
             var _context = new TheRealEstateDBContext();
-            return _context.RealEstates.SingleOrDefault(a => a.RealEstateID == id);
+            return _context.RealEstates.Include(c => c.User).SingleOrDefault(a => a.RealEstateID == id);
         }
 
         public void DeleteRealEstate(RealEstate realestate)
