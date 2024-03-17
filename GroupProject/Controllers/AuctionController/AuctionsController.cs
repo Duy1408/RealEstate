@@ -13,6 +13,8 @@ using GroupProject.Mapper;
 using BusinessObject.DTO.Request;
 using DAO;
 using System.Xml.Linq;
+using BusinessObject.ViewModels;
+using Service;
 
 namespace GroupProject.Controllers.AuctionController
 {
@@ -54,20 +56,13 @@ namespace GroupProject.Controllers.AuctionController
 
         // GET: api/Auctions/5
         [HttpGet("{id}")]
-        public ActionResult<Auction> GetAuction(int id)
+        public IActionResult GetAuctionByID(int id)
         {
-            if (_auction.GetAuction() == null)
-            {
-                return NotFound();
-            }
             var auction = _auction.GetAuctionById(id);
 
-            if (auction == null)
-            {
-                return NotFound();
-            }
+            var responese = _mapper.Map<AuctionResponseDTO>(auction);
 
-            return auction;
+            return Ok(responese);
         }
 
         // PUT: api/Auctions/5

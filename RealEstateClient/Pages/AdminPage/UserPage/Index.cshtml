@@ -33,10 +33,10 @@
                 @Html.DisplayNameFor(model => model.User[0].Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Role)
+                @Html.DisplayNameFor(model => model.User[0].RoleName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Bid)
+                @Html.DisplayNameFor(model => model.User[0].BidAmount)
             </th>
             <th></th>
         </tr>
@@ -63,10 +63,10 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Role.RoleName)
+                @Html.DisplayFor(modelItem => item.RoleName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Bid.BidID)
+                @Html.DisplayFor(modelItem => item.BidAmount)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.UserID">Edit</a> |

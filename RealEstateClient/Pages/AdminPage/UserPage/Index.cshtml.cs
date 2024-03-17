@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using BusinessObject.ViewModels;
 
 namespace RealEstateClient.Pages.AdminPage.UserPage
 {
@@ -27,7 +28,7 @@ namespace RealEstateClient.Pages.AdminPage.UserPage
 
         }
 
-        public IList<User> User { get; set; } = default!;
+        public IList<UserVM> User { get; set; } = default!;
         public string Admin { get; private set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
@@ -68,7 +69,7 @@ namespace RealEstateClient.Pages.AdminPage.UserPage
                 {
                     PropertyNameCaseInsensitive = true
                 };
-                List<User> users = JsonSerializer.Deserialize<List<User>>(strData, options)!;
+                List<UserVM> users = JsonSerializer.Deserialize<List<UserVM>>(strData, options)!;
 
                 User = users;
 

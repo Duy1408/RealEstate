@@ -9,6 +9,7 @@ using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text.Json;
+using BusinessObject.ViewModels;
 
 namespace RealEstateClient.Pages.AdminPage.CommentPage
 {
@@ -25,7 +26,7 @@ namespace RealEstateClient.Pages.AdminPage.CommentPage
             ApiUrl = "https://localhost:7088/api/Comments";
         }
 
-        public Comment Comment { get; set; } = default!;
+        public CommentVM Comment { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,7 +37,7 @@ namespace RealEstateClient.Pages.AdminPage.CommentPage
             {
                 PropertyNameCaseInsensitive = true
             };
-            var comments = JsonSerializer.Deserialize<Comment>(strData, options)!;
+            var comments = JsonSerializer.Deserialize<CommentVM>(strData, options)!;
 
             var commentCheck = comments;
 

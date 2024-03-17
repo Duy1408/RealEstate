@@ -9,6 +9,7 @@ using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using BusinessObject.DTO.Request;
 using System.Text.Json;
+using BusinessObject.DTO.Response;
 
 namespace RealEstateClient.Pages.AdminPage.AuctionPage
 {
@@ -26,7 +27,7 @@ namespace RealEstateClient.Pages.AdminPage.AuctionPage
             ApiUrl = "https://localhost:7088/api/Auctions";
         }
 
-        public Auction Auction { get; set; } = default!;
+        public AuctionResponseDTO Auction { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,7 +38,7 @@ namespace RealEstateClient.Pages.AdminPage.AuctionPage
             {
                 PropertyNameCaseInsensitive = true
             };
-            var _auction = JsonSerializer.Deserialize<Auction>(strData, options)!;
+            var _auction = JsonSerializer.Deserialize<AuctionResponseDTO>(strData, options)!;
 
             var auction = _auction;
 

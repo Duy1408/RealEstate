@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using BusinessObject.ViewModels;
 
 namespace RealEstateClient.Pages.AdminPage.CommentPage
 {
@@ -25,7 +26,7 @@ namespace RealEstateClient.Pages.AdminPage.CommentPage
 
         }
 
-        public IList<Comment> Comment { get; set; } = default!;
+        public IList<CommentVM> Comment { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -37,7 +38,7 @@ namespace RealEstateClient.Pages.AdminPage.CommentPage
                 PropertyNameCaseInsensitive = true
             };
 
-            List<Comment> comments = JsonSerializer.Deserialize<List<Comment>>(strData, options)!;
+            List<CommentVM> comments = JsonSerializer.Deserialize<List<CommentVM>>(strData, options)!;
 
             Comment = comments;
 

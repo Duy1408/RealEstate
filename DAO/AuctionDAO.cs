@@ -27,7 +27,7 @@ namespace DAO
         public List<Auction> GetAllAuction()
         {
             var _context = new TheRealEstateDBContext();
-            return _context.Auctions.Include(c => c.RealEstate).ToList();
+            return _context.Auctions.Include(c => c.RealEstate).Include(c => c.Bid).ToList();
         }
 
         public bool AddNewAuction(Auction auction)
@@ -66,7 +66,7 @@ namespace DAO
         public Auction GetAuctionByID(int id)
         {
             var _context = new TheRealEstateDBContext();
-            return _context.Auctions.SingleOrDefault(a => a.AuctionID == id);
+            return _context.Auctions.Include(c => c.RealEstate).Include(c => c.Bid).SingleOrDefault(a => a.AuctionID == id);
         }
 
         public void DeleteAuction(Auction auction)

@@ -63,7 +63,8 @@ namespace DAO
         {
             try
             {
-                var comment = _context.Comments.SingleOrDefault(c => c.CommentID == id);
+                var comment = _context.Comments.Include(a => a.RealEstate)
+                                     .Include(a => a.User).SingleOrDefault(c => c.CommentID == id);
                 return comment;
             }
             catch (Exception ex)

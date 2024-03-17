@@ -39,7 +39,7 @@ namespace GroupProject.Controllers.CommentController
                     return NotFound();
                 }
                 var comments = _comment.GetAllComment();
-                var response = _mapper.Map<List<CommentDTO>>(comments);
+                var response = _mapper.Map<List<CommentVM>>(comments);
 
                 return Ok(response);
             }
@@ -56,7 +56,7 @@ namespace GroupProject.Controllers.CommentController
             var comment = _comment.GetCommentByID(id);
 
 
-            var responese = _mapper.Map<CommentDTO>(comment);
+            var responese = _mapper.Map<CommentVM>(comment);
 
 
             return Ok(responese);
@@ -69,7 +69,7 @@ namespace GroupProject.Controllers.CommentController
             {
                 var comments = _mapper.Map<Comment>(comment);
                 _comment.AddNewComment(comments);
-                
+
 
                 return Ok("Create successful");
             }

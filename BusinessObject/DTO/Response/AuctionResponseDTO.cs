@@ -18,10 +18,10 @@ namespace BusinessObject.DTO.Response
 
         public bool Status { get; set; }
 
-        public int BidID { get; set; }
-     
+        public double BidAmount { get; set; }
 
-        public int RealEstateID { get; set; }
-        
+
+        public string RealEstateName { get; set; }
+
     }
 }
