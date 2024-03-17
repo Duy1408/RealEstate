@@ -7,71 +7,69 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
+using System.Net.Http.Headers;
+using BusinessObject.DTO;
+using System.Text.Json;
+using BusinessObject.DTO.Request;
+using System.Net.Http;
 
 namespace RealEstateClient.Pages.AdminPage.PropertyPage
 {
     public class EditModel : PageModel
     {
-        private readonly BusinessObject.BusinessObject.TheRealEstateDBContext _context;
+        private readonly HttpClient client;
+        private string ApiUrl = "";
 
-        public EditModel(BusinessObject.BusinessObject.TheRealEstateDBContext context)
+        public EditModel()
         {
-            _context = context;
+            client = new HttpClient();
+            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            client.DefaultRequestHeaders.Accept.Add(contentType);
+            ApiUrl = "https://localhost:7088/api/Properties";
         }
 
         [BindProperty]
-        public Propertie Propertie { get; set; } = default!;
+        public PropertieUpdateDTO Propertie { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Properties == null)
-            {
-                return NotFound();
-            }
+            HttpResponseMessage response = await client.GetAsync($"{ApiUrl}/{id}");
+            string strData = await response.Content.ReadAsStringAsync();
 
-            var propertie =  await _context.Properties.FirstOrDefaultAsync(m => m.PID == id);
-            if (propertie == null)
+            var options = new JsonSerializerOptions
             {
-                return NotFound();
-            }
-            Propertie = propertie;
-           ViewData["RealEstateID"] = new SelectList(_context.RealEstates, "RealEstateID", "Description");
+                PropertyNameCaseInsensitive = true
+            };
+            var _propertie = JsonSerializer.Deserialize<PropertieUpdateDTO>(strData, options)!;
+
+            Propertie = _propertie;
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(Propertie).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                string strData = JsonSerializer.Serialize(Propertie);
+                var contentData = new StringContent(strData, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PutAsync($"{ApiUrl}?id={id}", contentData);
+                if (response.IsSuccessStatusCode)
+                {
+                    ViewData["Success"] = "Update Success";
+                    return RedirectToPage("./Index");
+                }
+                ViewData["Error"] = "Update Error";
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
+            catch
             {
-                if (!PropertieExists(Propertie.PID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                ViewData["Error"] = "Fail To Call API";
+                return RedirectToPage("/Error");
             }
-
-            return RedirectToPage("./Index");
         }
 
-        private bool PropertieExists(int id)
-        {
-          return (_context.Properties?.Any(e => e.PID == id)).GetValueOrDefault();
-        }
+
     }
 }

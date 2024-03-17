@@ -27,7 +27,6 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
         }
         public RealEstateResponseDTO RealEstate { get; set; } = default!;
 
-        public string Admin { get; private set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

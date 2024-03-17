@@ -17,6 +17,7 @@ namespace GroupProject.Mapper
                                                    .ForMember(dest => dest.BidAmount,
                                        opt => opt.MapFrom(src => src.Bid!.BidAmount));
             CreateMap<UserDTO, User>().ReverseMap();
+            CreateMap<UserCreateDTO, User>().ReverseMap();
 
             CreateMap<BidVM, Bid>().ReverseMap();
             CreateMap<BidDTO, Bid>().ReverseMap();
@@ -25,6 +26,10 @@ namespace GroupProject.Mapper
             CreateMap<RealEstateUpdateDTO, RealEstate>().ReverseMap();
             CreateMap<RealEstateResponseDTO, RealEstate>().ReverseMap().ForMember(dest => dest.UserName,
                                        opt => opt.MapFrom(src => src.User!.UserName));
+
+            CreateMap<PropertieUpdateDTO, Propertie>().ReverseMap();
+            CreateMap<PropertiResponseDTO, Propertie>().ReverseMap().ForMember(dest => dest.RealEstateName,
+                                       opt => opt.MapFrom(src => src.RealEstate!.RealEstateName));
 
             CreateMap<AuctionUpdateDTO, Auction>().ReverseMap();
             CreateMap<AuctionResponseDTO, Auction>().ReverseMap().ForMember(dest => dest.BidAmount,

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTO.Response
 {
-   public class PropertiResponseDTO
+    public class PropertiResponseDTO
     {
-      
+        public int PID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }

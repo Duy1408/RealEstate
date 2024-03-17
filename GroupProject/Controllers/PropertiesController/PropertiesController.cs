@@ -19,12 +19,12 @@ namespace GroupProject.Controllers.PropertiesController
     [ApiController]
     public class PropertiesController : ControllerBase
     {
-        private  IPropertieService _service;
+        private IPropertieService _service;
         private readonly IMapper _mapper;
 
         public PropertiesController(IPropertieService service, IMapper mapper)
         {
-          _service = service;
+            _service = service;
             _mapper = mapper;
         }
 
@@ -32,10 +32,10 @@ namespace GroupProject.Controllers.PropertiesController
         [HttpGet]
         public ActionResult<IEnumerable<Propertie>> GetProperties()
         {
-          if (_service.GetAllPropertie()==null)
-          {
-              return NotFound();
-          }
+            if (_service.GetAllPropertie() == null)
+            {
+                return NotFound();
+            }
 
             var config = new MapperConfiguration(
                 cfg => cfg.AddProfile(new PropertieProfile())
@@ -52,50 +52,35 @@ namespace GroupProject.Controllers.PropertiesController
 
         // GET: api/Properties/5
         [HttpGet("{id}")]
-        public ActionResult<Propertie> GetPropertie(int id)
+        public IActionResult GetPropertiesByID(int id)
         {
-            if (_service.GetAllPropertie() == null)
-            {
-                return NotFound();
-            }
-            var propertie = _service.GetPropertiesByID(id);
+            var properties = _service.GetPropertiesByID(id);
 
-            if (propertie == null)
-            {
-                return NotFound();
-            }
+            var responese = _mapper.Map<PropertiResponseDTO>(properties);
 
-            return propertie;
+            return Ok(responese);
         }
 
         // PUT: api/Properties/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public IActionResult PutPropertie(int id, Propertie propertie)
+        [HttpPut]
+        public IActionResult UpdatePropertie(int id, PropertieUpdateDTO propertieUpdateDTO)
         {
-            if (_service.GetAllPropertie() == null)
-            {
-                return BadRequest();
-            }
-
-
             try
             {
-                _service.UpdateProperties(propertie);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (_service.GetAllPropertie() == null)
+                if (propertieUpdateDTO.PID != id)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
-            }
+                var _propertie = _mapper.Map<Propertie>(propertieUpdateDTO);
+                _service.UpdateProperties(_propertie);
 
-            return NoContent();
+                return Ok("Update Successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST: api/Properties
@@ -109,7 +94,7 @@ namespace GroupProject.Controllers.PropertiesController
             var mapper = config.CreateMapper();
             var properties = mapper.Map<Propertie>(propertiesCreateDTO);
             _service.AddNewProperties(properties);
-            
+
 
             return Ok(properties);
         }
@@ -128,7 +113,7 @@ namespace GroupProject.Controllers.PropertiesController
                 return NotFound();
             }
 
-    _service.DeletePropertiesById(propertie);
+            _service.DeletePropertiesById(propertie);
 
             return NoContent();
         }

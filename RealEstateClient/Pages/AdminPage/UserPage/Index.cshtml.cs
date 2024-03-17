@@ -29,26 +29,10 @@ namespace RealEstateClient.Pages.AdminPage.UserPage
         }
 
         public IList<UserVM> User { get; set; } = default!;
-        public string Admin { get; private set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
-            //try
-            //{
-            //    Admin = HttpContext.Session.GetString("Admin")!;
-            //    if (Admin != "Admin")
-            //    {
-            //        return NotFound();
-            //    }
-            //    if (Admin == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //}
-            //catch
-            //{
-            //    NotFound();
-            //}
+
 
             var token = HttpContext.Request.Cookies["AdminCookie"];
 

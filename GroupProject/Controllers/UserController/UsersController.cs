@@ -64,7 +64,7 @@ namespace GroupProject.Controllers.UserController
         }
 
         [HttpPost]
-        public IActionResult AddNewUser(UserVM user)
+        public IActionResult AddNewUser(UserCreateDTO user)
         {
             try
             {
@@ -118,7 +118,37 @@ namespace GroupProject.Controllers.UserController
             return Ok("Delete Successfully");
         }
 
+        [HttpPost]
+        [Route("Register")]
+        public async Task<IActionResult> Register(RegisterVM register)
+        {
+            var checkEmail = _userServices.GetAllUser().Where(u =>
+                u.Email.Equals(register.Email)).FirstOrDefault();
 
+            if (checkEmail != null)
+            {
+                return BadRequest("Email Existed");
+            }
+
+            var user = new UserCreateDTO
+            {
+                UserName = register.UserName,
+                FullName = register.FullName,
+                PhoneNumber = register.PhoneNumber,
+                Email = register.Email,
+                Password = register.Password,
+                Status = true,
+                RoleID = 1,
+                BidID = 4
+            };
+
+
+            var _user = _mapper.Map<User>(user);
+            _userServices.AddNewUser(_user);
+
+            return Ok(user);
+
+        }
 
 
     }

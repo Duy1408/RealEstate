@@ -8,6 +8,7 @@ namespace RealEstateClient.Pages
         public IActionResult OnGet()
         {
             Response.Cookies.Delete("UserCookie");
+            Response.Cookies.Delete("AdminCookie");
             return RedirectToPage("/HomePage");
         }
     }
