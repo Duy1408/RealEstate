@@ -18,6 +18,7 @@ namespace BusinessObject.DTO.Response
         public string Description { get; set; }
         public bool Status { get; set; }
         public string Image { get; set; }
+        public int UserID { get; set; }
         public string UserName { get; set; }
 
     }

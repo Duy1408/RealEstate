@@ -12,5 +12,6 @@ namespace BusinessObject.DTO
         public int BidID { get; set; }
         [Required(ErrorMessage = "BidAmount is required.")]
         public double BidAmount { get; set; }
+        public bool Status { get; set; }
     }
 }

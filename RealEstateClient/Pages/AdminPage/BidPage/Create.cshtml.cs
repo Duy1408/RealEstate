@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace RealEstateClient.Pages.AdminPage.BidPage
 {
@@ -24,8 +26,11 @@ namespace RealEstateClient.Pages.AdminPage.BidPage
             ApiUrl = "https://localhost:7088/api/Bids";
 
         }
+        public IActionResult OnGet()
+        {
+            return Page();
+        }
 
- 
 
         [BindProperty]
         public Bid Bid { get; set; } = default!;
@@ -45,6 +50,7 @@ namespace RealEstateClient.Pages.AdminPage.BidPage
                     ViewData["Message"] = "Add New Auctions successfully";
                     return RedirectToPage("./Index");
                 }
+
             }
             catch
             {

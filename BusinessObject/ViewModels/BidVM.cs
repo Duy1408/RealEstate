@@ -9,5 +9,6 @@ namespace BusinessObject.ViewModels
     public class BidVM
     {
         public double BidAmount { get; set; }
+        public bool Status { get; set; }
     }
 }

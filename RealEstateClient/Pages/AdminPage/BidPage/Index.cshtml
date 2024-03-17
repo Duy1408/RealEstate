@@ -17,6 +17,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Bid[0].BidAmount)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bid[0].Status)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -26,6 +29,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BidAmount)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.BidID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.BidID">Details</a> |

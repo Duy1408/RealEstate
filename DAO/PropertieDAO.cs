@@ -65,11 +65,11 @@ namespace DAO
             }
         }
 
-    
+
         public Propertie GetPropertieByID(int id)
         {
             var _context = new TheRealEstateDBContext();
-            return _context.Properties.SingleOrDefault(a => a.PID == id);
+            return _context.Properties.Include(c => c.RealEstate).SingleOrDefault(a => a.PID == id);
         }
 
         public void DeletePropertie(Propertie propertie)
@@ -77,7 +77,7 @@ namespace DAO
             var _context = new TheRealEstateDBContext();
 
             var a = _context.Properties.FirstOrDefault(a => a.PID == propertie.PID);
-            _context.Properties .Remove(a);
+            _context.Properties.Remove(a);
 
             _context.SaveChanges();
         }

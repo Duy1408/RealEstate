@@ -6,57 +6,61 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace RealEstateClient.Pages.AdminPage.PropertyPage
 {
     public class DeleteModel : PageModel
     {
-        private readonly BusinessObject.BusinessObject.TheRealEstateDBContext _context;
+        private readonly HttpClient _httpClient;
+        private string ApiUrl = "";
 
-        public DeleteModel(BusinessObject.BusinessObject.TheRealEstateDBContext context)
+        public DeleteModel()
         {
-            _context = context;
+            _httpClient = new HttpClient();
+            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            _httpClient.DefaultRequestHeaders.Accept.Add(contentType);
+            ApiUrl = "https://localhost:7088/api/Properties";
         }
 
         [BindProperty]
-      public Propertie Propertie { get; set; } = default!;
+        public Propertie Propertie { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Properties == null)
-            {
-                return NotFound();
-            }
+            HttpResponseMessage responseMessage = await _httpClient.GetAsync($"{ApiUrl}/{id}");
+            string strData = await responseMessage.Content.ReadAsStringAsync();
 
-            var propertie = await _context.Properties.FirstOrDefaultAsync(m => m.PID == id);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var _propertie = JsonSerializer.Deserialize<Propertie>(strData, options)!;
 
-            if (propertie == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                Propertie = propertie;
-            }
+
+            Propertie = _propertie;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Properties == null)
+            try
             {
-                return NotFound();
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{ApiUrl}/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    ViewData["Success"] = "Delete Success";
+                    return RedirectToPage("./Index");
+                }
+                ViewData["Error"] = "Delete Error";
+                return RedirectToPage("./Index");
             }
-            var propertie = await _context.Properties.FindAsync(id);
-
-            if (propertie != null)
+            catch
             {
-                Propertie = propertie;
-                _context.Properties.Remove(Propertie);
-                await _context.SaveChangesAsync();
+                ViewData["Error"] = "Fail To Call API";
+                return RedirectToPage("/Error");
             }
-
-            return RedirectToPage("./Index");
         }
     }
 }

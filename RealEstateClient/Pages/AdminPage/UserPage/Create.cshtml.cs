@@ -30,28 +30,11 @@ namespace RealEstateClient.Pages.AdminPage.UserPage
         [BindProperty]
         public User User { get; set; } = default!;
 
-        public string Admin { get; private set; } = default!;
-
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            //try
-            //{
-            //    Admin = HttpContext.Session.GetString("Admin")!;
-            //    if (Admin != "Admin")
-            //    {
-            //        return NotFound();
-            //    }
-            //    if (Admin == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //}
-            //catch
-            //{
-            //    NotFound();
-            //}
+
             try
             {
 
