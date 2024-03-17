@@ -1,4 +1,5 @@
 ﻿using BusinessObject.BusinessObject;
+using BusinessObject.DTO.Response;
 using BusinessObject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,20 +10,19 @@ using System.Text.Json;
 
 namespace RealEstateClient.Pages
 {
-    public class UserProfileModel : PageModel
+    public class RealEstateProfileModel : PageModel
     {
         private readonly HttpClient client;
         private string ApiUrl = "";
 
-        public UserProfileModel()
+        public RealEstateProfileModel()
         {
             client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
-            ApiUrl = "https://localhost:7088/api/Users";
+            ApiUrl = "https://localhost:7088/api/RealEstates";
         }
-        [BindProperty]
-        public UserVM User { get; set; } = default!;
+        public RealEstate RealEstate { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -46,9 +46,9 @@ namespace RealEstateClient.Pages
             {
                 PropertyNameCaseInsensitive = true
             };
-            var _user = JsonSerializer.Deserialize<UserVM>(strData, options)!;
+            var realEstate = JsonSerializer.Deserialize<RealEstate>(strData, options)!;
 
-            User = _user;
+            RealEstate = realEstate;
             return Page();
         }
     }
