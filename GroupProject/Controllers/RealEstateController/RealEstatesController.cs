@@ -53,20 +53,13 @@ namespace GroupProject.Controllers.RealEstateController
 
         // GET: api/RealEstates/5
         [HttpGet("{id}")]
-        public ActionResult<RealEstate> GetRealEstate(int id)
+        public IActionResult GetRealEstateById(int id)
         {
-            if (_service.GetRealEstates() == null)
-            {
-                return NotFound();
-            }
-            var realEstate = _service.GetRealEstateById(id);
+            var realestate = _service.GetRealEstateById(id);
 
-            if (realEstate == null)
-            {
-                return NotFound();
-            }
+            var responese = _mapper.Map<RealEstateResponseDTO>(realestate);
 
-            return realEstate;
+            return Ok(responese);
         }
 
 
