@@ -11,6 +11,7 @@ using SQLitePCL;
 using AutoMapper;
 using BusinessObject.DTO.Response;
 using GroupProject.Mapper;
+using BusinessObject.DTO.Request;
 
 namespace GroupProject.Controllers.PropertiesController
 {
@@ -100,15 +101,17 @@ namespace GroupProject.Controllers.PropertiesController
         // POST: api/Properties
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public ActionResult<Propertie> PostPropertie(Propertie propertie)
+        public ActionResult<Propertie> PostAuction(PropertiesCreateDTO propertiesCreateDTO)
         {
-            if (_service.GetAllPropertie() == null)
-            {
-                return Problem("Entity set 'TheRealEstateDBContext.Properties'  is null.");
-            }
-     _service.AddNewProperties(propertie);
+            var config = new MapperConfiguration(
+                cfg => cfg.AddProfile(new PropertieProfile())
+            );
+            var mapper = config.CreateMapper();
+            var properties = mapper.Map<Propertie>(propertiesCreateDTO);
+            _service.AddNewProperties(properties);
+            
 
-            return CreatedAtAction("GetPropertie", new { id = propertie.PID }, propertie);
+            return Ok(properties);
         }
 
         // DELETE: api/Properties/5
