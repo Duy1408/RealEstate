@@ -10,6 +10,7 @@ namespace BusinessObject.BusinessObject
     {
         public int BidID { get; set; }
         public double BidAmount { get; set; }
+        public bool Status { get; set; }
         public List<Auction> Auctions { get; set; }
 
     }

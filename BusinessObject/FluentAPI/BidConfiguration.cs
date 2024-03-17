@@ -16,6 +16,7 @@ namespace BusinessObject.FluentAPI
             builder.ToTable("Bid");
             builder.HasKey(x => x.BidID);
             builder.Property(x => x.BidAmount);
+            builder.Property(x => x.Status);
             builder.HasMany(x => x.Auctions).WithOne(x => x.Bid).OnDelete(DeleteBehavior.NoAction);
 
 
