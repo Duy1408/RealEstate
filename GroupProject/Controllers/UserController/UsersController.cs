@@ -43,7 +43,7 @@ namespace GroupProject.Controllers.UserController
                     return NotFound();
                 }
                 var users = _userServices.GetAllUser();
-                var response = _mapper.Map<List<UserDTO>>(users);
+                var response = _mapper.Map<List<UserVM>>(users);
 
                 return Ok(response);
             }
@@ -58,7 +58,7 @@ namespace GroupProject.Controllers.UserController
         {
             var user = _userServices.GetUserByID(id);
 
-            var responese = _mapper.Map<UserDTO>(user);
+            var responese = _mapper.Map<UserVM>(user);
 
             return Ok(responese);
         }

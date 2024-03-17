@@ -27,10 +27,10 @@
                 @Html.DisplayNameFor(model => model.Comment[0].Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Comment[0].RealEstate)
+                @Html.DisplayNameFor(model => model.Comment[0].RealEstateName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Comment[0].User)
+                @Html.DisplayNameFor(model => model.Comment[0].UserName)
             </th>
             <th></th>
         </tr>
@@ -51,10 +51,10 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RealEstate.Description)
+                @Html.DisplayFor(modelItem => item.RealEstateName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
+                @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.CommentID">Edit</a> |

@@ -28,7 +28,9 @@ namespace DAO
             try
             {
                 return _context.Users.Include(a => a.RealEstates)
-                                     .Include(a => a.Comments).ToList();
+                                     .Include(a => a.Comments)
+                                     .Include(a => a.Role)
+                                     .Include(a => a.Bid).ToList();
             }
             catch (Exception ex)
             {
@@ -68,7 +70,7 @@ namespace DAO
         {
             try
             {
-                var account = _context.Users.SingleOrDefault(c => c.UserID == id);
+                var account = _context.Users.Include(a => a.Role).Include(a => a.Bid).SingleOrDefault(c => c.UserID == id);
                 return account;
             }
             catch (Exception ex)

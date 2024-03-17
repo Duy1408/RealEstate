@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using BusinessObject.ViewModels;
 
 namespace RealEstateClient.Pages.AdminPage.UserPage
 {
@@ -24,7 +25,7 @@ namespace RealEstateClient.Pages.AdminPage.UserPage
             ApiUrl = "https://localhost:7088/api/Users";
         }
         [BindProperty]
-        public User User { get; set; } = default!;
+        public UserVM User { get; set; } = default!;
 
         public string Admin { get; private set; } = default!;
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -52,7 +53,7 @@ namespace RealEstateClient.Pages.AdminPage.UserPage
             {
                 PropertyNameCaseInsensitive = true
             };
-            var _user = JsonSerializer.Deserialize<User>(strData, options)! ;
+            var _user = JsonSerializer.Deserialize<UserVM>(strData, options)!;
 
             User = _user;
             return Page();
