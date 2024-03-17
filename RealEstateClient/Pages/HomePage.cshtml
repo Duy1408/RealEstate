@@ -56,6 +56,10 @@
           <a class="nav-link " asp-page="/UserProfile">About</a>
           </li>
 
+           <li class="nav-item">
+          <a class="nav-link " asp-page="/RealEstateProfile">RealEstate Profile</a>
+          </li>
+
           <li class="nav-item">
            <a class="nav-link " asp-page="/ShowAllRealEstate">Property</a>
           </li>
@@ -103,6 +107,7 @@
                     <h1 class="intro-title mb-4 ">
                      <span class="color-b"> @Html.DisplayFor(modelItem => item.RealEstateName) </span> 
                     </h1>
+                    
                     <p class="intro-subtitle intro-price">
                       <a href="#"><span class="price-a">rent | $  @Html.DisplayFor(modelItem => item.Estimation)</span></a>
                     </p>
@@ -239,7 +244,8 @@
                   <div class="card-overlay-a-content">
                     <div class="card-header-a">
                       <h2 class="card-title-a">
-                       @Html.DisplayFor(modelItem => item.RealEstateName)
+                       @Html.DisplayFor(modelItem => item.RealEstateName)|
+                       @Html.DisplayFor(modelItem => item.UserName)
                       </h2>
                     </div>
                     <div class="card-body-a">

@@ -1,4 +1,5 @@
 using BusinessObject.BusinessObject;
+using BusinessObject.DTO.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http.Headers;
@@ -19,7 +20,7 @@ namespace RealEstateClient.Pages
             ApiUrl = "https://localhost:7088/api/RealEstates";
         }
 
-        public RealEstate RealEstate { get; set; } = default!;
+        public RealEstateResponseDTO RealEstate { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,7 +31,7 @@ namespace RealEstateClient.Pages
             {
                 PropertyNameCaseInsensitive = true
             };
-            var _realEstate = JsonSerializer.Deserialize<RealEstate>(strData, options)!;
+            var _realEstate = JsonSerializer.Deserialize<RealEstateResponseDTO>(strData, options)!;
 
             var realEstate = _realEstate;
 

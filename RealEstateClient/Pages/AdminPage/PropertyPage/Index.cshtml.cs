@@ -1,28 +1,33 @@
-using BusinessObject.BusinessObject;
-using BusinessObject.DTO.Response;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
+using BusinessObject.DTO.Response;
 using System.Text.Json;
 
-namespace RealEstateClient.Pages
+namespace RealEstateClient.Pages.AdminPage.PropertyPage
 {
-    public class HomePageModel : PageModel
+    public class IndexModel : PageModel
     {
+
         private readonly HttpClient client = null!;
         private string ApiUrl = "";
 
-        public HomePageModel()
+        public IndexModel()
         {
             client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
-            ApiUrl = "https://localhost:7088/api/RealEstates";
+            ApiUrl = "https://localhost:7088/api/Properties";
 
         }
-        public IList<RealEstateResponseDTO> RealEstate { get; set; } = default!;
+        public IList<Propertie> Propertie { get;set; } = default!;
 
-        
         public async Task<IActionResult> OnGetAsync()
         {
             HttpResponseMessage response = await client.GetAsync(ApiUrl);
@@ -32,9 +37,9 @@ namespace RealEstateClient.Pages
             {
                 PropertyNameCaseInsensitive = true
             };
-            List<RealEstateResponseDTO> listRealEstate = JsonSerializer.Deserialize<List<RealEstateResponseDTO>>(strData, options)!;
+            List<Propertie> properties = JsonSerializer.Deserialize<List<Propertie>>(strData, options)!;
 
-            RealEstate = listRealEstate;
+            Propertie = properties;
 
             return Page();
         }
