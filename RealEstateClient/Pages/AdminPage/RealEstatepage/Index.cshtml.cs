@@ -9,6 +9,8 @@ using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using BusinessObject.DTO.Response;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace RealEstateClient.Pages.AdminPage.RealEstatepage
 {
@@ -27,36 +29,33 @@ namespace RealEstateClient.Pages.AdminPage.RealEstatepage
         }
         public IList<RealEstateResponseDTO> RealEstate { get; set; } = default!;
 
-        public string Admin { get; private set; } = default!;
         public async Task<IActionResult> OnGetAsync()
         {
-            try
+            var token = HttpContext.Request.Cookies["AdminCookie"];
+
+            if (string.IsNullOrEmpty(token))
             {
-                Admin = HttpContext.Session.GetString("Admin")!;
-                if (Admin != "Admin")
-                {
-                    return NotFound();
-                }
-                if (Admin == null)
-                {
-                    return NotFound();
-                }
+                return RedirectToPage("/Login"); // Không tìm thấy token trong cookie
             }
-            catch
+
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadJwtToken(token) as JwtSecurityToken;
+            var roleClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            if (roleClaim?.Value == "Admin")
             {
-                NotFound();
+                HttpResponseMessage response = await client.GetAsync(ApiUrl);
+                string strData = await response.Content.ReadAsStringAsync();
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                List<RealEstateResponseDTO> listRealEstate = JsonSerializer.Deserialize<List<RealEstateResponseDTO>>(strData, options)!;
+
+                RealEstate = listRealEstate;
+
+                return Page();
             }
-            HttpResponseMessage response = await client.GetAsync(ApiUrl);
-            string strData = await response.Content.ReadAsStringAsync();
-
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            List<RealEstateResponseDTO> listRealEstate = JsonSerializer.Deserialize<List<RealEstateResponseDTO>>(strData, options)!;
-
-            RealEstate = listRealEstate;
-
             return Page();
         }
     }

@@ -9,6 +9,8 @@ using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using BusinessObject.DTO.Response;
 using System.Text.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace RealEstateClient.Pages.AdminPage.PropertyPage
 {
@@ -26,22 +28,37 @@ namespace RealEstateClient.Pages.AdminPage.PropertyPage
             ApiUrl = "https://localhost:7088/api/Properties";
 
         }
-        public IList<Propertie> Propertie { get;set; } = default!;
+        public IList<Propertie> Propertie { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
-            HttpResponseMessage response = await client.GetAsync(ApiUrl);
-            string strData = await response.Content.ReadAsStringAsync();
+            var token = HttpContext.Request.Cookies["AdminCookie"];
 
-            var options = new JsonSerializerOptions
+            if (string.IsNullOrEmpty(token))
             {
-                PropertyNameCaseInsensitive = true
-            };
-            List<Propertie> properties = JsonSerializer.Deserialize<List<Propertie>>(strData, options)!;
+                return RedirectToPage("/Login"); // Không tìm thấy token trong cookie
+            }
 
-            Propertie = properties;
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadJwtToken(token) as JwtSecurityToken;
+            var roleClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            if (roleClaim?.Value == "Admin")
+            {
+                HttpResponseMessage response = await client.GetAsync(ApiUrl);
+                string strData = await response.Content.ReadAsStringAsync();
 
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                List<Propertie> properties = JsonSerializer.Deserialize<List<Propertie>>(strData, options)!;
+
+                Propertie = properties;
+
+                return Page();
+            }
             return Page();
+
         }
     }
 }

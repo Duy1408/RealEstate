@@ -9,6 +9,8 @@ using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using BusinessObject.ViewModels;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace RealEstateClient.Pages.AdminPage.CommentPage
 {
@@ -30,19 +32,34 @@ namespace RealEstateClient.Pages.AdminPage.CommentPage
 
         public async Task<IActionResult> OnGetAsync()
         {
-            HttpResponseMessage responseMessage = await client.GetAsync(ApiUrl);
-            string strData = await responseMessage.Content.ReadAsStringAsync();
+            var token = HttpContext.Request.Cookies["AdminCookie"];
 
-            var options = new JsonSerializerOptions
+            if (string.IsNullOrEmpty(token))
             {
-                PropertyNameCaseInsensitive = true
-            };
+                return RedirectToPage("/Login"); // Không tìm thấy token trong cookie
+            }
 
-            List<CommentVM> comments = JsonSerializer.Deserialize<List<CommentVM>>(strData, options)!;
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadJwtToken(token) as JwtSecurityToken;
+            var roleClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            if (roleClaim?.Value == "Admin")
+            {
+                HttpResponseMessage responseMessage = await client.GetAsync(ApiUrl);
+                string strData = await responseMessage.Content.ReadAsStringAsync();
 
-            Comment = comments;
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
 
+                List<CommentVM> comments = JsonSerializer.Deserialize<List<CommentVM>>(strData, options)!;
+
+                Comment = comments;
+
+                return Page();
+            }
             return Page();
+
         }
     }
 }
