@@ -62,7 +62,15 @@ namespace GroupProject.Controllers.RealEstateController
             return Ok(responese);
         }
 
+        [HttpGet("byuserid/{userId}")]
+        public IActionResult GetMenuByShopID(int id)
+        {
+            var realestate = _service.GetRealEstateByUserID(id);
 
+            var responese = realestate.Select(realestate => _mapper.Map<RealEstateResponseDTO>(realestate)).ToList();
+
+            return Ok(responese);
+        }
 
         // PUT: api/RealEstates/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

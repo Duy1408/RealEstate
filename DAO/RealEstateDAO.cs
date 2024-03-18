@@ -104,6 +104,22 @@ namespace DAO
             return a;
         }
 
+        public IQueryable<RealEstate> GetRealEstateByUserID(int id)
+        {
+            try
+            {
+                var _context = new TheRealEstateDBContext();
+                var realEstates = _context.RealEstates!.Where(a => a.UserID == id).Include(c => c.User);
+
+
+                return realEstates;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
 
     }
 }

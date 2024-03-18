@@ -18,5 +18,6 @@ namespace Service.Interface
         void UpdateRealEstate(RealEstate realestate);
 
         IQueryable<RealEstate> SearchRealEstate(string name);
+        IQueryable<RealEstate> GetRealEstateByUserID(int id);
     }
 }
