@@ -72,6 +72,11 @@ namespace RealEstateClient.Pages
                             HttpContext.Response.Cookies.Append("ContractorCookie", token);
                             return RedirectToPage("./HomePage");
                         }
+                        else if (roleClaim?.Value == "3") //Staff
+                        {
+                            HttpContext.Response.Cookies.Append("StaffCookie", token);
+                            return RedirectToPage("./AdminPage/UserPage/Index");
+                        }
                     }
                 }
             }

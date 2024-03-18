@@ -32,7 +32,6 @@ namespace RealEstateClient.Pages.AdminPage.AuctionPage
         public async Task<IActionResult> OnGetAsync()
         {
             var token = HttpContext.Request.Cookies["AdminCookie"];
-
             if (string.IsNullOrEmpty(token))
             {
                 return RedirectToPage("/Login"); // Không tìm thấy token trong cookie

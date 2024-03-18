@@ -1,0 +1,58 @@
+﻿@page
+@model RealEstateClient.Pages.CreateBidModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+@{
+    var token = Request.Cookies["UserCookie"];
+}
+
+<h1>Create</h1>
+
+<h4>Bid</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Bid.BidAmount" class="control-label"></label>
+                <input asp-for="Bid.BidAmount" class="form-control" />
+                <span asp-validation-for="Bid.BidAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                @if (string.IsNullOrEmpty(token))
+                {
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Bid.Status" /> @Html.DisplayNameFor(model => model.Bid.Status)
+                    </label>
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="form-group text-danger">
+    @if (string.IsNullOrEmpty(token))
+    {
+        @ViewData["Message"]
+    }
+    else
+    {
+        @ViewData["Success"]
+    }
+</div>
+
+<div>
+    <a asp-page="/UserProfile">Back to Home</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
