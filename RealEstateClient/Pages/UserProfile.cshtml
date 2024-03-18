@@ -83,10 +83,13 @@
                                     <a asp-page="/HomePage">Home</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a asp-page="/RealEstateProfile">My RealEstate</a>
+                                    <a asp-page="/RealEstateDetails" asp-route-id="@Model.User.UserID">My RealEstate</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Margaret Stone
+                                <li class="breadcrumb-item">
+                                    <a asp-page="/CreateBid">My Bid</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a asp-page="/CreateRealEstatePage">My Create RealEstate</a>
                                 </li>
                             </ol>
                         </nav>
