@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BusinessObject.BusinessObject;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace RealEstateClient.Pages.AdminPage.BidPage
 {
@@ -25,22 +27,36 @@ namespace RealEstateClient.Pages.AdminPage.BidPage
 
         }
 
-        public IList<Bid> Bid { get;set; } = default!;
+        public IList<Bid> Bid { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
+            var token = HttpContext.Request.Cookies["AdminCookie"];
 
-            HttpResponseMessage response = await client.GetAsync(ApiUrl);
-            string strData = await response.Content.ReadAsStringAsync();
-
-            var options = new JsonSerializerOptions
+            if (string.IsNullOrEmpty(token))
             {
-                PropertyNameCaseInsensitive = true
-            };
-            List<Bid> bids = JsonSerializer.Deserialize<List<Bid>>(strData, options)!;
+                return RedirectToPage("/Login"); // Không tìm thấy token trong cookie
+            }
 
-            Bid = bids;
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadJwtToken(token) as JwtSecurityToken;
+            var roleClaim = jsonToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            if (roleClaim?.Value == "Admin")
+            {
+                HttpResponseMessage response = await client.GetAsync(ApiUrl);
+                string strData = await response.Content.ReadAsStringAsync();
 
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                List<Bid> bids = JsonSerializer.Deserialize<List<Bid>>(strData, options)!;
+
+                Bid = bids;
+
+                return Page();
+
+            }
             return Page();
         }
     }
