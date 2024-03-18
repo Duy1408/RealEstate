@@ -32,6 +32,11 @@ namespace Repo
             return dao.GetRealEstateByID(id);
         }
 
+        public IQueryable<RealEstate> GetRealEstateByUserID(int id)
+        {
+            return dao.GetRealEstateByUserID(id);
+        }
+
         public List<RealEstate> GetRealEstates()
         {
             return dao.GetAllRealEstate();
@@ -39,7 +44,7 @@ namespace Repo
 
         public IQueryable<RealEstate> SearchRealEstate(string name)
         {
-            return dao.SearchRealEstateByName(name); 
+            return dao.SearchRealEstateByName(name);
         }
 
         public void UpdateRealEstate(RealEstate realestate)

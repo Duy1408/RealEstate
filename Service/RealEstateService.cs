@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-   public class RealEstateService : IRealEstateService
+    public class RealEstateService : IRealEstateService
     {
         private IRealEstateRepo _repo;
         public RealEstateService(IRealEstateRepo repo)
@@ -29,7 +29,12 @@ namespace Service
 
         public RealEstate GetRealEstateById(int id)
         {
-           return _repo.GetRealEstateById(id);
+            return _repo.GetRealEstateById(id);
+        }
+
+        public IQueryable<RealEstate> GetRealEstateByUserID(int id)
+        {
+            return _repo.GetRealEstateByUserID(id);
         }
 
         public List<RealEstate> GetRealEstates()
