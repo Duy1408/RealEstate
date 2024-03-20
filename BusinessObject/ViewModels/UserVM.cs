@@ -16,8 +16,8 @@ namespace BusinessObject.ViewModels
         public string PhoneNumber { get; set; }
         public string RoleName { get; set; }
         public bool Status { get; set; }
-
+        public int BidID { get; set; }
         public double BidAmount { get; set; }
-        
+
     }
 }

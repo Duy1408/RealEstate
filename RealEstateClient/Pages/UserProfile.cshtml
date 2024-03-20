@@ -86,7 +86,7 @@
                                     <a asp-page="/RealEstateOfUser" asp-route-id="@Model.User.UserID">My RealEstate</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a asp-page="/CreateBid">My Bid</a>
+                                    <a asp-page="/AddBid" asp-route-id="@Model.User.BidID">My Bid</a>
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a asp-page="/CreateRealEstatePage">My Create RealEstate</a>
@@ -130,7 +130,15 @@
                                             </p>
                                             <p>
                                                 <strong>Amount: </strong>
-                                                <span class="color-text-a"> @Model.User.BidAmount</span>
+                                                <span class="color-text-a"> 
+                                                    @if (Model.Bid.Status == false) {
+                                                        @("Please wait for Admin to confirm!")
+                                                    }
+                                                    else
+                                                    {
+                                                        @Model.User.BidAmount
+                                                    }
+                                                </span>
                                             </p>
                                         </div>
                                     </div>
