@@ -25,6 +25,8 @@ namespace Service
 
         public List<User> GetAllUser() => _userRepo.GetAllUser();
 
+        public IQueryable<User> GetUserByBidID(int id) => _userRepo.GetUserByBidID(id);
+
         public User GetUserByID(int id) => _userRepo.GetUserByID(id);
 
         public IQueryable<User> SearchUser(string name) => _userRepo.SearchUser(name);

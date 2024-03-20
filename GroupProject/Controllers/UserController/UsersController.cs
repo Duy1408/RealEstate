@@ -12,6 +12,7 @@ using BusinessObject.ViewModels;
 using System.Security.Principal;
 using BusinessObject.DTO;
 using Microsoft.AspNetCore.Authorization;
+using BusinessObject.DTO.Response;
 
 namespace GroupProject.Controllers.UserController
 {
@@ -59,6 +60,16 @@ namespace GroupProject.Controllers.UserController
             var user = _userServices.GetUserByID(id);
 
             var responese = _mapper.Map<UserVM>(user);
+
+            return Ok(responese);
+        }
+
+        [HttpGet("bybidid/{bidId}")]
+        public IActionResult GetUserByBidID(int id)
+        {
+            var user = _userServices.GetUserByBidID(id);
+
+            var responese = user.Select(user => _mapper.Map<UserVM>(user)).ToList();
 
             return Ok(responese);
         }

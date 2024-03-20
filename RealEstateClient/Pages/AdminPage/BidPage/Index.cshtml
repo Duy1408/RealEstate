@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Bid[0].Status)
             </th>
+            <th>
+                UserName
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -33,9 +36,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BidAmount)
             </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                    @{
+                        var user = Model.User.FirstOrDefault(u => u.BidID == item.BidID);
+                        if (user != null)
+                        {
+                            @Html.DisplayFor(modelItem => user.UserName)
+                        }
+                    }
+            </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.BidID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.BidID">Details</a> |
