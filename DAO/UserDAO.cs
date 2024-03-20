@@ -99,11 +99,25 @@ namespace DAO
 
         public IQueryable<User> SearchUserByName(string searchvalue)
         {
-            var _context = new TheRealEstateDBContext();
             var a = _context.Users.Where(a => a.UserName.ToUpper().Contains(searchvalue.Trim().ToUpper()));
 
 
             return a;
         }
+
+        public IQueryable<User> GetUserByBidID(int id)
+        {
+            try
+            {
+                var users = _context.Users!.Where(a => a.BidID == id).Include(a => a.Role).Include(a => a.Bid);
+
+                return users;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

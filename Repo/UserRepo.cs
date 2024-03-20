@@ -20,6 +20,8 @@ namespace Repo
 
         public List<User> GetAllUser() => dao.GetAllUser();
 
+        public IQueryable<User> GetUserByBidID(int id) => dao.GetUserByBidID(id);
+
         public User GetUserByID(int id) => dao.GetUserByID(id);
 
         public IQueryable<User> SearchUser(string name) => dao.SearchUserByName(name);

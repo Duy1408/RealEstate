@@ -19,5 +19,6 @@ namespace Service.Interface
         void UpdateUser(User user);
 
         IQueryable<User> SearchUser(string name);
+        IQueryable<User> GetUserByBidID(int id);
     }
 }

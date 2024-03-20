@@ -10,6 +10,8 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using BusinessObject.ViewModels;
+using BusinessObject.DTO.Response;
 
 namespace RealEstateClient.Pages.AdminPage.BidPage
 {
@@ -28,7 +30,7 @@ namespace RealEstateClient.Pages.AdminPage.BidPage
         }
 
         public IList<Bid> Bid { get; set; } = default!;
-
+        public IList<UserVM> User { get; set; } = default!;
         public async Task<IActionResult> OnGetAsync()
         {
             var token = HttpContext.Request.Cookies["AdminCookie"];
@@ -53,6 +55,18 @@ namespace RealEstateClient.Pages.AdminPage.BidPage
                 List<Bid> bids = JsonSerializer.Deserialize<List<Bid>>(strData, options)!;
 
                 Bid = bids;
+
+                HttpResponseMessage responses = await client.GetAsync($"https://localhost:7088/api/Users");
+                string strDatas = await responses.Content.ReadAsStringAsync();
+
+                var optionss = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                List<UserVM> users = JsonSerializer.Deserialize<List<UserVM>>(strDatas, optionss)!;
+
+                User = users;
+
 
                 return Page();
 
