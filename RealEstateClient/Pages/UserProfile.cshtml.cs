@@ -23,7 +23,8 @@ namespace RealEstateClient.Pages
         }
         [BindProperty]
         public UserVM User { get; set; } = default!;
-
+        [BindProperty]
+        public Bid Bid { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
 
@@ -49,6 +50,19 @@ namespace RealEstateClient.Pages
             var _user = JsonSerializer.Deserialize<UserVM>(strData, options)!;
 
             User = _user;
+
+
+
+            HttpResponseMessage bidResponse = await client.GetAsync($"https://localhost:7088/api/Bids/{User.BidID}");
+            string bidData = await bidResponse.Content.ReadAsStringAsync();
+            var bidOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var bid = JsonSerializer.Deserialize<Bid>(bidData, bidOptions)!;
+
+            Bid = bid;
+
             return Page();
         }
     }
